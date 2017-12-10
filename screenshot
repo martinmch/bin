@@ -1,0 +1,19 @@
+#!/bin/bash
+
+IMG_PATH="/home/martinmch/pictures/screenshots/"
+STAMP="$IMG_PATH/%y-%m-%d--%H-%M-%S.png"
+
+prog="1.section\n2.fullscreen"
+
+cmd=$(echo -e $prog | dmenu  -l 20  -nf '#999' -nb '#000' -sf '#eee' -sb '#554080' -p 'Choose screenshot type:')
+
+cd $IMG_PATH
+case ${cmd%% *} in
+  2.fullscreen)	
+      scrot -d 1 $STAMP &&
+          notify-send -u low 'Scrot' 'Fullscreen taken and saved' -t=5;;
+  1.section)	scrot -s $STAMP &&
+      notify-send -u low 'Scrot' 'Screenshot of section saved' -t=5;;
+  *) exec "'${cmd}'";;
+esac
+

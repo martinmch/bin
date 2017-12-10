@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+cat > ~/mail/martinmch/inbox/new/dayplan-`date +'%a-%d'` <<EOF
+Date: `date +'%a, %d %b %Y %r +0100'`
+To: Martin
+From: CalService
+Subject: Your `date +'%A'` dayplan
+
+$(rem)
+EOF

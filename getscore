@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+curl -s $1 | hxnormalize -x | hxselect -s '\n' .football-score | sed -e 's/<[^>]*>//g'
