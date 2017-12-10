@@ -1,0 +1,65 @@
+#!/bin/bash
+usage() {
+cat << EOF
+USAGE:
+
+Not written yet
+
+EOF
+}
+
+
+LAYOUT_DIR="$HOME/.config/i3"
+CUR_WS="$(i3ws)"
+
+
+save() {
+    if [ -z $1 ]; then # If no name is specified
+        echo "No name specified for layout."
+        return 1
+    else
+        FILE="$LAYOUT_DIR/$1.json"
+    fi
+    
+    if [ -z $2 ]; then # If no workspace is specified
+        echo "Storing workspace $CUR_WS as **$1**"
+        i3-save-tree --workspace $CUR_WS > "$FILE"
+        return 0
+    fi
+    
+    echo "Storing workspace $2 as **$1**"
+    i3-save-tree --workspace "$2" > "$FILE" 
+    sed -i 's|// "|"|' $FILE
+}
+
+
+load() {
+    # Does the file exists?
+    FILE="$LAYOUT_DIR/$1.json"
+    if [ -f "$FILE" ]; then
+        echo "Layout $1 chosen"
+    else
+        echo "No layout specified"
+        return 1
+    fi
+    if [ -z "$2" ]; then
+        echo "No workspace specified."
+        return 1
+    else
+        echo "Workspace $2 chosen"
+    fi
+    
+    i3-msg "workspace $2; append_layout $FILE"
+}
+
+
+main() {
+    NAME="$2"
+    WS="$3"
+case $1 in
+    "save") save $NAME $WS;; # save name workspace
+    "load") load $NAME $WS;; # load name workspace
+esac
+}
+
+main $@
