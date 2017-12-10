@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [[ $(cat ~/.offlineimaprc | grep 'pass' | wc -l) = 2 ]]; then
+    if ! [[ $1 ]]; then
+      offlineimap -q -u quiet
+    fi
+fi
+
+maildirMartinmch="$HOME/mail/martinmch/inbox/new/"
+maildirUcph="$HOME/mail/ucph/inbox/new/"
+mailUcph="$(find $maildirUcph -type f | wc -l)"
+mailMartinmch="$(find $maildirMartinmch -type f | wc -l)"
+mail="$(echo "$mailUcph+$mailMartinmch" | bc)"
+
+if [[ $1 ]]; then
+    echo $mail
+fi
+if (( mail > 0 )); then
+    notify-send -u normal 'Mail' 'You have new mail' -i ~/.bin/mail.ico
+fi
