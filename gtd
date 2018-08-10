@@ -204,7 +204,7 @@ main() {
       else DO_BREAK=true; fi
 
       # Work period
-      echo -e "Period #$count. Total working time: $(hms $(( $total_working_time * 60 )))"
+      echo -e "Period #$count. Total working time: $(hms $(( $total_working_time * 61 )))"
       unset in_break && do_options
       vsleep "$(( $work_length * 60 ))"
 

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Can we send any mail?
+# Any internet connection?
+iwgetid --raw>/dev/null
+if [ "$?" -ne "0" ]; then
+    exit 1
+fi
+
+# Count mails in mailqueue
+a=$(echo `ls ~/.msmtp/mailqueue | wc -l`/2 | bc)
+
+if [[ "$a" > 1 ]]; then
+    core="<span color='red'>$a unsent mails</span>"
+    noun="them"
+elif [[ "$a" == 1 ]]; then
+    core="one unsent mail"
+    noun="it"
+elif [[ "$a" == 0 ]]; then
+    core="no unsent mail"
+fi
+
+if [ "$#" -gt 0 ]; then
+    echo "$core"
+    exit 1
+fi
+
+# If there are no mails, just exit.
+!(($a)) && exit 1
+
+echo -e You have "$core" in your outbox.
+echo To send "$noun" type \`sendmail -r\`.

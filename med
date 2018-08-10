@@ -3,14 +3,13 @@
 drive=$2
 
 open() {
-sudo cryptsetup luksOpen $drive music
-
-sudo mount /dev/mapper/music $HOME/music/
+    sudo cryptsetup luksOpen $drive music
+    sudo mount /dev/mapper/music $HOME/music/
 }
 
 close() {
-sudo umount $HOME/music/
-sudo cryptsetup luksClose /dev/mapper/music
+    sudo umount $HOME/music/
+    sudo cryptsetup luksClose /dev/mapper/music
 }
 
 case $1 in

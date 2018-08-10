@@ -1,19 +1,35 @@
 #!/bin/bash
 
-IMG_PATH="/home/martinmch/pictures/screenshots/"
-STAMP="$IMG_PATH/%y-%m-%d--%H-%M-%S.png"
+function StoreLastScreenshot() {
+    echo "$(realpath $1.png)" > $HOME/.lastscreen
+}
 
-prog="1.section\n2.fullscreen"
+function global_screenshot() {
+    IMG_PATH="$HOME/pictures/screenshots/"
+    STAMP="$IMG_PATH/$(date +"%y-%m-%d--%H-%M-%S").png"
+    cmd=$(echo -e "1.section\n2.fullscreen" | dmenu  -l 20  -nf '#999' -nb '#000' -sf '#eee' -sb '#554080' -p 'Choose screenshot type:')
+    cd $IMG_PATH
+    case ${cmd%% *} in
+      2.fullscreen)
+          scrot -d 1 $STAMP &&
+          notify-send -u low 'Scrot' 'Screenshot of full screen saved';;
+      1.section)
+          scrot -s $STAMP &&
+          notify-send -u low 'Scrot' 'Screenshot of section saved';;
+      *) exec "'${cmd}'";;
+    esac
+    StoreLastScreenshot $STAMP
+}
 
-cmd=$(echo -e $prog | dmenu  -l 20  -nf '#999' -nb '#000' -sf '#eee' -sb '#554080' -p 'Choose screenshot type:')
+function usage () {
+    cat<<EOF
+    [screenshot --global] for a screenshot in
+        $HOME/pictures/screenshots/
+    [screenshot --online] for a screenshot in
+        IMG_PATH="$HOME/documents/web/public/assets/"
+    that is synced with web server
+EOF
+}
 
-cd $IMG_PATH
-case ${cmd%% *} in
-  2.fullscreen)	
-      scrot -d 1 $STAMP &&
-          notify-send -u low 'Scrot' 'Fullscreen taken and saved' -t=5;;
-  1.section)	scrot -s $STAMP &&
-      notify-send -u low 'Scrot' 'Screenshot of section saved' -t=5;;
-  *) exec "'${cmd}'";;
-esac
+global_screenshot
 

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+mailUcph="$(find "$HOME/mail/ucph/INBOX/new/" -type f | wc -l)"
+mailMartinmch="$(find "$HOME/mail/martinmch/inbox/new/" -type f | wc -l)"
+mailWork="$(find "$HOME/mail/christiansen/inbox/new/" -type f | wc -l)"
+mail="$(echo "$mailUcph+$mailMartinmch+$mailWork" | bc)"
+
+if [ $mail -gt 0 ];
+then
+    HEADER="$mail new mail(s)"
+    meMail="$mailMartinmch in personal inbox"
+    WorkMail="$mailWork in work inbox"
+    uniMail="$mailUcph in university inbox"
+    ar=(${#HEADER} ${#meMail} ${#WorkMail} ${#uniMail})
+    IFS=$'\n'
+    len=$(echo "${ar[*]}" | sort -nr | head -n1)
+    line=$(yes - | head -${len} | tr -d "\n")
+    echo $HEADER
+    echo $line
+    echo $meMail
+    echo $WorkMail
+    echo $uniMail
+fi

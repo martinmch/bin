@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
+lastpoll=$(echo "$(date +%s)-$(head $HOME/.lastmailpoll)" | bc)
 
-if [[ $(cat ~/.offlineimaprc | grep 'pass' | wc -l) = 2 ]]; then
-    if ! [[ $1 ]]; then
-      offlineimap -q -u quiet
-    fi
+if [ $lastpoll -gt 180 ];
+then
+      offlineimap -u quiet -q -f INBOX -a martinmch & pid1=$!
+      offlineimap -u quiet -q -f INBOX -a christiansen & pid2=$!
+      offlineimap -u quiet -q -f INBOX -a ucph & pid3=$!
+      wait $pid1
+      wait $pid2
+      wait $pid3
+      echo `date +%s` > ~/.lastmailpoll
+      exit 1
 fi
-
-maildirMartinmch="$HOME/mail/martinmch/inbox/new/"
-maildirUcph="$HOME/mail/ucph/inbox/new/"
-mailUcph="$(find $maildirUcph -type f | wc -l)"
-mailMartinmch="$(find $maildirMartinmch -type f | wc -l)"
-mail="$(echo "$mailUcph+$mailMartinmch" | bc)"
-
-if [[ $1 ]]; then
-    echo $mail
-fi
-if (( mail > 0 )); then
-    notify-send -u normal 'Mail' 'You have new mail' -i ~/.bin/mail.ico
-fi
+echo It has only been $lastpoll seconds since mails were last polled.
+echo Please wait `echo 180-$lastpoll | bc` seconds before polling again.

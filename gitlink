@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+git remote get-url --all origin \
+    | sed -s 's|\:|\/|' \
+    | sed -s 's/^git@/https\:\/\//' \
+    | sed -s "s/\.git$/\/commit\/`git rev-parse --short HEAD`/" \
+    | tee >(xclip -i)
