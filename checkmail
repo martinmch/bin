@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 mailUcph="$(find "$HOME/mail/ucph/INBOX/new/" -type f | wc -l)"
 mailMartinmch="$(find "$HOME/mail/martinmch/inbox/new/" -type f | wc -l)"
 mailWork="$(find "$HOME/mail/christiansen/inbox/new/" -type f | wc -l)"
@@ -14,9 +13,8 @@ then
     ar=(${#HEADER} ${#meMail} ${#WorkMail} ${#uniMail})
     IFS=$'\n'
     len=$(echo "${ar[*]}" | sort -nr | head -n1)
-    line=$(yes - | head -${len} | tr -d "\n")
     echo $HEADER
-    echo $line
+    echo $(yes - | head -${len} | tr -d "\n")
     echo $meMail
     echo $WorkMail
     echo $uniMail
