@@ -35,8 +35,8 @@ getLink () {
 
 main () {
     artikel=$(getArticle)
-	headline=$(getHeadline)
-	thislink=$(getLink)
+    headline=$(getHeadline)
+    thislink=$(getLink)
     echo $headline \($thislink\)
 }
 

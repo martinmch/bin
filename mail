@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+usage() {
+    echo $"Usage: `basename $0` {fetch|status|outgoing}"
+}
+
+case $1 in
+	fetch) /home/martinmch/.bin/fetchmail; exit 0;;
+	status) /home/martinmch/.bin/mail-status ${@:2}; exit 0;;
+    *) usage; exit 1;;
+esac
+

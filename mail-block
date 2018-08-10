@@ -1,0 +1,14 @@
+#!/bin/bash
+
+outbox=$(/home/martinmch/.bin/mail status out --raw)
+inbox=$(/home/martinmch/.bin/mail status --raw)
+
+if [ "$outbox" -gt 0 ]; then
+    outbox="<span color='red'>$outbox</span>"
+fi
+
+if [ "$inbox" -gt 0 ]; then
+    inbox="<span color='green'>$inbox</span>"
+fi
+printf "mail in/out: $inbox/$outbox"
+
