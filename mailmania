@@ -3,7 +3,7 @@ lastpoll=$(echo "$(date +%s)-$(head $HOME/.lastmailpoll)" | bc)
 
 if [ $lastpoll -gt 180 ];
 then
-    newmail
+    fetchmail
 fi
 echo It has only been $lastpoll seconds since mails were last polled.
 echo Please wait `echo 180-$lastpoll | bc` seconds before polling again.
