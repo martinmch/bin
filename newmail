@@ -1,16 +1,8 @@
 #!/usr/bin/env bash
-lastpoll=$(echo "$(date +%s)-$(head $HOME/.lastmailpoll)" | bc)
-
-if [ $lastpoll -gt 180 ];
-then
-      offlineimap -u quiet -q -f INBOX -a martinmch & pid1=$!
-      offlineimap -u quiet -q -f INBOX -a christiansen & pid2=$!
-      offlineimap -u quiet -q -f INBOX -a ucph & pid3=$!
-      wait $pid1
-      wait $pid2
-      wait $pid3
-      echo `date +%s` > ~/.lastmailpoll
-      exit 1
-fi
-echo It has only been $lastpoll seconds since mails were last polled.
-echo Please wait `echo 180-$lastpoll | bc` seconds before polling again.
+offlineimap -u quiet -q -f INBOX -a martinmch & pid1=$!
+offlineimap -u quiet -q -f INBOX -a christiansen & pid2=$!
+offlineimap -u quiet -q -f INBOX -a ucph & pid3=$!
+wait $pid1
+wait $pid2
+wait $pid3
+echo `date +%s` > ~/.lastmailpoll
