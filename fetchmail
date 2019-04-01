@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# If there is no internet, don't attempt to sync mail.
+/sbin/iwgetid &>/dev/null || echo "No internet. Interrupting..." && exit 
+
 offlineimap -u quiet -q -f INBOX -a martinmch & pid1=$!
 offlineimap -u quiet -q -f INBOX -a christiansen & pid2=$!
 offlineimap -u quiet -q -f INBOX -a ucph & pid3=$!
