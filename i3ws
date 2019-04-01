@@ -1,3 +1,5 @@
 #!/bin/bash
 
+# Get i3 workspace number
+
 i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).name'
