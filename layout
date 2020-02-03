@@ -3,6 +3,8 @@ usage() {
 cat << EOF
 USAGE:
 
+This is a script for handling i3 layouts.
+
 Not written yet
 
 EOF

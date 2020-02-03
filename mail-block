@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Mail block for i3 status bar.
+
 outbox=$(/home/martinmch/.bin/mail status out --raw)
 inbox=$(/home/martinmch/.bin/mail status --raw)
 

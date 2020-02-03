@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-# If there's not internet, do not fetch mail!
-/sbin/iwgetid &>/dev/null || exit
+# If there is no internet, don't attempt to sync mail.
+/sbin/iwgetid &>/dev/null || echo "No internet. Interrupting..." && exit 
 
-echo Syncrhonizing personal mailbox..
 offlineimap -u quiet -q -f INBOX -a martinmch & pid1=$!
 echo Synchronizing personal mailbox..
 offlineimap -u quiet -q -f INBOX -a christiansen & pid2=$!

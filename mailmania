@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Only poll every third minute.
+
 lastpoll=$(echo "$(date +%s)-$(head $HOME/.lastmailpoll)" | bc)
 if [ $lastpoll -gt 180 ];
 then
