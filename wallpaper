@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+WPDIR="$HOME/pictures/wallpapers"
+
+usage() {
+    echo $"Usage: `basename $0` {season|timeofday}"
+}
+
+setSeasonalWallpaper() {
+    MONTH=$(date -d "$D" '+%m')
+    SEASON="winter"
+    if [ "$MONTH" -lt 3 ]; then
+        SEASON="winter"
+    elif [ "$MONTH" -lt 6 ]; then
+        SEASON="spring"
+    elif [ "$MONTH" -lt 9 ]; then
+        SEASON="summer"
+    elif [ "$MONTH" -lt 12 ]; then
+        SEASON="fall"
+    fi
+    WPDIR="$WPDIR/$SEASON"
+    setWallpaper
+}
+
+setTimeOfDayWallpaper() {
+    HOUR=$(date '+%H')
+    TOD="evening"
+    if [ "$MONTH" -lt 5 ]; then
+        TOD="night"
+    elif [ "$MONTH" -lt 11 ]; then
+        TOD="morning"
+    elif [ "$MONTH" -lt 15 ]; then
+        TOD="midday"
+    elif [ "$MONTH" -lt 18 ]; then
+        TOD="noon"
+    fi
+    WPDIR="$WPDIR/$TOD"
+    setWallpaper
+}
+
+setWallpaper() {
+    feh --bg-scale --recursive --randomize --no-fehbg "$WPDIR"
+
+}
+
+
+case $1 in
+    season) setSeasonalWallpaper; exit 0;;
+    timeofday) setTimeOfDayWallpaper; exit 0;;
+    help) about; exit 1;;
+    *) setWallpaper; exit 0;;
+esac
+
+

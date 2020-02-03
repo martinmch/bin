@@ -25,7 +25,7 @@ case $1 in
     "--help" )
         usage; exit 0;;
 esac
-center=50
+center=43
 while read line; do
     echo -n "\"$line\": "
     echo "$center-($(echo -n "$line" | wc -c))/2" | bc

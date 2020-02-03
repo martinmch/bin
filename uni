@@ -1,0 +1,98 @@
+#!/bin/bash
+
+usage() {
+cat << EOF
+USAGE:
+
+    uni [note|notes|course(s)| ] $1 $2
+
+OPTIONS:
+
+    uni note      : Used when creating a new note.
+    uni notes     : Used when accessing notes dir.
+    uni notes new : same as uni note
+    uni course(s) : Used when accessing course dirs.
+    uni           : Used to enter the $UNI dir
+
+EOF
+}
+
+shopt -s nocasematch
+
+BGreen='\e[1;32m'       # Green
+BRed='\e[1;31m'         # Green
+NC="\e[m"               # Color Reset
+
+newnote() {
+echo -e $BGreen'Course overview'
+echo -e '---------------'$NC
+PS3='Please choose a course:'
+options=("PoP" "DMA" "MAD" "MASD" "SU" "Inter" "LinAlgDat" "Compsys")
+select opt in "${options[@]}"
+do
+    case $opt in
+              "pop") course="PoP"; break;;
+              "dma") course="DMA"; break;;
+              "mad") course="MAD"; break;;
+             "masd") course="MADS"; break;;
+               "su") course="SU"; break;;
+            "inter") course="Inter"; break;;
+        "linalgdat") course="LAD"; break;;
+          "compsys") course="Compsys"; break;;
+                  *) echo invalid option;;
+    esac
+done
+echo -e $BGreen"Please enter a title for your note:"$BRed
+printf "$course - "
+read title
+echo -e $NC
+if [[ "$title" == *.md ]]
+then
+    touch $NOTES_DIR/cs$YEAR/mod$MODULE/$course\ -\ "$title"
+    vim $NOTES_DIR/cs$YEAR/mod$MODULE/$course\ -\ "$title"
+    unset course
+else
+    touch $NOTES_DIR/cs$YEAR/mod$MODULE/$course\ -\ "$title".md
+    vim $NOTES_DIR/cs$YEAR/mod$MODULE/$course\ -\ "$title".md
+    unset course
+fi
+}
+
+notesdir() {
+case $1 in
+    [1-3]*) case $2 in 
+            "") cd $NOTES_DIR/cs$1/;;
+            [1-4]*) cd $NOTES_DIR/cs$1/mod$2;;
+            *) cd $NOTES_DIR;;
+        esac;;
+    "new") newnote $1;;
+    "") cd $NOTES_DIR;;
+    *) cd $NOTES_DIR/cs$YEAR/mod$MODULE;;
+esac
+}
+
+
+main() {
+case $1 in
+       "-h") usage;;
+    "notes") notesdir $2 $3;;
+     "note") newnote $1;;
+      "pop") cd $UNI/courses/PoP/;;
+      "dma") cd $UNI/courses/DMA/;;
+      "mad") cd $UNI/courses/MAD/;;
+     "masd") cd $UNI/courses/MASD/;;
+       "su") cd $UNI/courses/SU/;;
+    "inter") cd $UNI/courses/Inter/;;
+"linalgdat") cd $UNI/courses/LinAlgDat/;;
+   "linalg") cd $UNI/courses/LinAlgDat/;;
+      "lin") cd $UNI/courses/LinAlgDat/;;
+      "lad") cd $UNI/courses/LinAlgDat/;;
+      "lag") cd $UNI/courses/LinAlgDat/;;
+  "compsys") cd $UNI/courses/Compsys/;;
+   "course") cd $UNI/courses/;; 
+  "courses") cd $UNI/courses/;;
+          *) cd $UNI;;
+esac
+}
+
+main $1 $2 $3

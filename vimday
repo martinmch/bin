@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+export DIARYDIR=/home/martinmch/notes/diary/
+FILE=${DIARYDIR}/`date +"%y-%m-%d"`.txt
+cat ~/.bin/.template >> ${FILE}
+vim "+normal G$" +startinsert ${FILE}
+

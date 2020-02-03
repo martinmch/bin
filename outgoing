@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-mails=$(echo `ls ~/.msmtp/mailqueue | wc -l`/2 | bc)
+mails=$(echo `ls /home/martinmch/.msmtp/mailqueue | wc -l`/2 | bc)
 
 # If any arguments has been supplied, the output should just be the
 # number of unsent mails
+# if [[ "$mails" > 0 ]]; then
+#     aplay /home/martinmch/.bin/mailout.wav &> /dev/null &
+# fi
+
 if [ "$#" -gt 0 ]; then
     echo "$mails"
     exit 1

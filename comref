@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+HEADER=`echo "Trørød Kollegiet" | readable`
+CENTER_TITLE=`echo "Rådsmøde" | readable`
+LEFT_TITLE=`echo "Beboerrådet" | readable`
+RIGHT_TITLE=`echo "Side %p./%p#" | readable`
+LEFT_FOOTER=`LANG=da_DK.UTF-8 date +"Skrevet d. %d. %B %Y"`
+RIGHT_FOOTER=`echo "www.tkol.dk" | readable`
+FOOTER=`echo "Trørød Kollegiet" | readable`
+
+cat $1 | iconv -c -f utf-8 -t ISO-8859-1 \
+    | a2ps \
+        --header="$HEADER" \
+        --center-title="$CENTER_TITLE" \
+        --left-title="$LEFT_TITLE" \
+        --right-title="$RIGHT_TITLE" \
+        --left-footer="$LEFT_FOOTER" \
+        --right-footer="$RIGHT_FOOTER" \
+        --footer="$FOOTER" \
+        -1 -l73 -q -o build/${1%.txt}-a4.ps
+
+cat $1 | iconv -c -f utf-8 -t ISO-8859-1 \
+       | a2ps \
+        --header="$HEADER" \
+        --center-title="$CENTER_TITLE" \
+        --left-title="$LEFT_TITLE" \
+        --right-title="$RIGHT_TITLE" \
+        --left-footer="$LEFT_FOOTER" \
+        --right-footer="$RIGHT_FOOTER" \
+        --footer="$FOOTER" \
+        -q -l73 --margin=1 -o build/${1%.txt}.ps

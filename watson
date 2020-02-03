@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+PROJNAME=`watson status -p`
+if [ ${PROJNAME} != "No project started" ]; then
+    PROJTIME=`watson status -e | sed -e 's/minutes ago/min/'`
+    echo $(watson status -p) - $PROJTIME
+    exit 0
+fi
+
+echo ${PROJNAME}

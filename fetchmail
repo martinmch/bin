@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+# If there's not internet, do not fetch mail!
+/sbin/iwgetid &>/dev/null || exit
+
+echo Syncrhonizing personal mailbox..
 offlineimap -u quiet -q -f INBOX -a martinmch & pid1=$!
+echo Synchronizing personal mailbox..
 offlineimap -u quiet -q -f INBOX -a christiansen & pid2=$!
+echo Synchronizing university mailbox..
 offlineimap -u quiet -q -f INBOX -a ucph & pid3=$!
 wait $pid1
 wait $pid2

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+while read line; do
+    echo ${line} | iconv -c -f utf-8 -t ISO-8859-1
+done < "${1:-/dev/stdin}"

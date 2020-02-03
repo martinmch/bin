@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+MONTH=$(date -d "$D" '+%m')
+SEASON="winter"
+
+if [ "$MONTH" -lt 3 ]; then
+    SEASON="winter"
+elif [ "$MONTH" -lt 6 ]; then
+    SEASON="spring"
+elif [ "$MONTH" -lt 9 ]; then
+    SEASON="summer"
+elif [ "$MONTH" -lt 12 ]; then
+    SEASON="summer"
+fi
+
+echo "$SEASON"

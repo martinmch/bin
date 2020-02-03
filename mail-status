@@ -4,10 +4,7 @@ case $1 in
     out) /home/martinmch/.bin/outgoing $2; exit 1;;
 esac
 
-mailUcph="$(find "/home/martinmch/mail/ucph/INBOX/new/" -type f | wc -l)"
-mailMartinmch="$(find "/home/martinmch/mail/martinmch/inbox/new/" -type f | wc -l)"
-mailWork="$(find "/home/martinmch/mail/christiansen/inbox/new/" -type f | wc -l)"
-mail="$(echo "$mailUcph+$mailMartinmch+$mailWork" | bc)"
+mailMartinmch="$(find "/home/martinmch/mail/martinmch/INBOX/new/" -type f | wc -l)"
 
 if [ "$#" -gt 0 ]; then
     echo "$mail"
@@ -15,18 +12,6 @@ if [ "$#" -gt 0 ]; then
 fi
 
 # Silence is golden
-if [ $mail -gt 0 ];
-then
-    HEADER="$mail new mail(s)"
-    meMail="$mailMartinmch in personal inbox"
-    WorkMail="$mailWork in work inbox"
-    uniMail="$mailUcph in university inbox"
-    ar=(${#HEADER} ${#meMail} ${#WorkMail} ${#uniMail})
-    IFS=$'\n'
-    len=$(echo "${ar[*]}" | sort -nr | head -n1)
-    echo $HEADER
-    echo $(yes - | head -${len} | tr -d "\n")
-    echo $meMail
-    echo $WorkMail
-    echo $uniMail
+if [[ "$mail" -gt 0 ]]; then
+    echo "$mailMartinmch new mail(s)"
 fi

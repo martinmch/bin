@@ -109,7 +109,7 @@ LOG=~/.msmtp/log/msmtp.queue.log
 #EMAIL_CONN_NOTEST=y                 # deprecated ; use below var
 #EMAIL_CONN_TEST={x| |p|P|n|s}       # see settings above for EMAIL_CONN_TEST
 EMAIL_CONN_TEST=n
-#EMAIL_QUEUE_QUIET=t
+EMAIL_QUEUE_QUIET=t
 ## ======================================================================================
 
 umask 077                            # set secure permissions on created directories and files
@@ -477,7 +477,7 @@ send_mail() {    # <-- all mail args ; mail text via TMP
   [ "$EMAIL_CONN_TEST" != 'x' ] && \
   [ -z "$EMAIL_CONN_NOTEST" ] && {   # do connection test
     # connect_test || { # send mails when internet is there.
-    0 || { # Always enqueue mails before sending.
+    { # Always enqueue mails before sending.
       log "mail for [ $* ] : couldn't be sent - host not connected"
       enqueue_mail "$@"              # enqueue the mail
       return
