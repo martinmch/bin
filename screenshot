@@ -12,12 +12,13 @@ function global_screenshot() {
     case ${cmd%% *} in
       2.fullscreen)
           scrot -d 1 $STAMP &&
-          notify-send -u low 'Scrot' 'Screenshot of full screen saved';;
+          notify-send -u low 'Screenshot' 'Screenshot of full screen saved';;
       1.section)
           scrot -s $STAMP &&
-          notify-send -u low 'Scrot' 'Screenshot of section saved';;
+          notify-send -u low 'Screenshot' 'Screenshot of section saved';;
       *) exec "'${cmd}'";;
     esac
+    mpv --really-quiet /home/martinmch/.bin/screenshot.wav &
     StoreLastScreenshot $STAMP
 }
 

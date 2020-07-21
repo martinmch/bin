@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+template="/home/martinmch/documents/notes/other/jobs/new/application-dansk.tex"
+restexfile="christiansen-martin-application-${1%.diff}.tex"
+
+patch ${template} $1 -o ${restexfile}
+
+pdflatex ${restexfile}
