@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+LANG=`setxkbmap -query | grep -o "us\|dk"`
+
+if [ "$LANG" = "" ]; then
+	setxkbmap `cat /home/mbc/.keylang`
+elif [ "$LANG" = "dk" ]; then
+	NEWLANG="us"
+elif [ "$LANG" = "us" ]; then
+	NEWLANG="dk"
+fi
+	
+#echo lang = "$LANG"
+#echo new lang = "$NEWLANG"
+setxkbmap "$NEWLANG"
+echo "$NEWLANG" > /home/mbc/.keylang
