@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+DIR="/home/mbc/documents/log"
+DATE=`date +"%Y-%m-%d" --date=${1}`
+DAY=`date +"%u" --date=${1}`
+DAYSTR=$(case "${DAY}" in
+    ("1") echo "   Monday";;
+    ("2") echo "  Tuesday";;
+    ("3") echo "Wednesday";;
+    ("4") echo " Thursday";;
+    ("5") echo "   Friday";;
+    ("6") echo " Saturday"; break;;
+    ("7") echo "   Sunday"; break;;
+esac)
+echo $DAYSTR
+
+FILE="${DIR}/${DATE}.txt"
+if [ ! -f "$FILE" ]; then
+cat << EOF > "$FILE"
+================================================================================
+Notebook                                                               ${DAYSTR}
+M. Christiansen                    CapMon A/S                         ${DATE}
+================================================================================
+
+Sign-in : 0000
+Lunch at: 0000
+Back  at: 0000 (0 mins)
+Sign-out: 0000 (0 hrs 0 mins)
+
+EOF
+fi
+
+vim "$FILE"
